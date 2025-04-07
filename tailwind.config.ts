@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+				display: ['Lexend', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,7 +66,34 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom colors for our CV matcher
+				"cv-blue": {
+					50: "#f0f7ff",
+					100: "#e0efff",
+					200: "#c7e1ff",
+					300: "#a5cbff",
+					400: "#7cadff", 
+					500: "#5788fb",
+					600: "#3a68f0",
+					700: "#2952dd",
+					800: "#2545b8",
+					900: "#213c91",
+					950: "#182555",
+				},
+				"cv-purple": {
+					50: "#f7f6fe",
+					100: "#eeecfd",
+					200: "#dfdafb",
+					300: "#c7bdf8",
+					400: "#ab96f2",
+					500: "#9471ea",
+					600: "#8151db",
+					700: "#7040c3",
+					800: "#5c359f",
+					900: "#4c2e81",
+					950: "#301c51",
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +116,16 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-slow': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.6' },
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-slow': 'pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 			}
 		}
 	},
