@@ -1,9 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 const Header = () => {
   const location = useLocation();
+  const { isAdmin } = useAuth();
   
   const isActive = (path: string) => {
     return location.pathname === path ? "text-cv-blue-600 font-medium" : "text-gray-600 hover:text-cv-blue-600 transition-colors";
@@ -33,11 +35,26 @@ const Header = () => {
         <Link to="#" className="text-sm text-gray-600 hover:text-cv-blue-600 transition-colors">
           Pricing
         </Link>
+        {isAdmin && (
+          <Link to="/admin" className={`text-sm ${isActive("/admin")} text-orange-500 hover:text-orange-600`}>
+            Admin
+          </Link>
+        )}
       </nav>
       
       <div className="flex items-center gap-4">
-        <Button variant="outline" className="hidden md:flex">Sign In</Button>
-        <Button>Get Started</Button>
+        {isAdmin ? (
+          <Link to="/admin">
+            <Button variant="outline" className="hidden md:flex">Admin Dashboard</Button>
+          </Link>
+        ) : (
+          <>
+            <Link to="/admin-login">
+              <Button variant="outline" className="hidden md:flex">Admin</Button>
+            </Link>
+            <Button>Get Started</Button>
+          </>
+        )}
       </div>
     </header>
   );
