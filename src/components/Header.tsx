@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const Header = () => {
   const location = useLocation();
-  const { isAdmin } = useAuth();
+  const { isAdmin, userType, logout } = useAuth();
   
   const isActive = (path: string) => {
     return location.pathname === path ? "text-cv-blue-600 font-medium" : "text-gray-600 hover:text-cv-blue-600 transition-colors";
@@ -26,15 +26,33 @@ const Header = () => {
         <Link to="/" className={`text-sm ${isActive("/")}`}>
           Home
         </Link>
-        <Link to="/matcher" className={`text-sm ${isActive("/matcher")}`}>
-          CV Matcher
-        </Link>
-        <Link to="/courses" className={`text-sm ${isActive("/courses")}`}>
-          Courses
-        </Link>
+        
+        {userType === 'jobseeker' && (
+          <>
+            <Link to="/matcher" className={`text-sm ${isActive("/matcher")}`}>
+              CV Matcher
+            </Link>
+            <Link to="/courses" className={`text-sm ${isActive("/courses")}`}>
+              Courses
+            </Link>
+          </>
+        )}
+        
+        {userType === 'company' && (
+          <>
+            <Link to="/post-job" className={`text-sm ${isActive("/post-job")}`}>
+              Post a Job
+            </Link>
+            <Link to="/candidates" className={`text-sm ${isActive("/candidates")}`}>
+              Find Candidates
+            </Link>
+          </>
+        )}
+        
         <Link to="#" className="text-sm text-gray-600 hover:text-cv-blue-600 transition-colors">
           Pricing
         </Link>
+        
         {isAdmin && (
           <Link to="/admin" className={`text-sm ${isActive("/admin")} text-orange-500 hover:text-orange-600`}>
             Admin
@@ -44,9 +62,12 @@ const Header = () => {
       
       <div className="flex items-center gap-4">
         {isAdmin ? (
-          <Link to="/admin">
-            <Button variant="outline" className="hidden md:flex">Admin Dashboard</Button>
-          </Link>
+          <>
+            <Link to="/admin">
+              <Button variant="outline" className="hidden md:flex">Admin Dashboard</Button>
+            </Link>
+            <Button variant="ghost" onClick={logout}>Logout</Button>
+          </>
         ) : (
           <>
             <Link to="/admin-login">
