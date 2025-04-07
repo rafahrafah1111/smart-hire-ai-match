@@ -12,8 +12,8 @@ const HowItWorks = () => {
     <div className="py-16 bg-gray-50 dark:bg-gray-950">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 text-gradient">
-            How SmartMatch Works
+          <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 bg-gradient-to-r from-cv-blue-600 to-cv-purple-600 inline-block text-transparent bg-clip-text">
+            How Jobseekers.ai Works
           </h2>
           <p className="text-gray-600 dark:text-gray-300">
             Our AI-powered matching system uses advanced language models to provide detailed insights beyond simple keyword matching.
@@ -101,9 +101,9 @@ const HowItWorks = () => {
                   <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z" clipRule="evenodd" />
                 </svg>
               </div>
-              <CardTitle>3. Actionable Insights</CardTitle>
+              <CardTitle>3. Personalized Insights</CardTitle>
               <CardDescription>
-                Receive detailed analysis with a compatibility score and actionable recommendations.
+                Receive detailed analysis with recommendations, skill gaps, and course suggestions.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -124,7 +124,7 @@ const HowItWorks = () => {
                   <svg className="h-5 w-5 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Personalized improvement recommendations</span>
+                  <span>Tailored course recommendations</span>
                 </li>
               </ul>
             </CardContent>
@@ -134,7 +134,7 @@ const HowItWorks = () => {
         <div className="mt-12 text-center">
           <div className="inline-block p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-medium">Technical Note:</span> SmartMatch uses Llama-3.1-Storm-8B with LoRA fine-tuning trained on 15K+ CV/job pairs.
+              <span className="font-medium">Technical Note:</span> Jobseekers.ai uses Llama-3.1-Storm-8B with LoRA fine-tuning trained on 15K+ CV/job pairs.
             </p>
           </div>
         </div>
