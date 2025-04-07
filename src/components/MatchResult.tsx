@@ -18,11 +18,24 @@ type MatchResultProps = {
     strengths: string[];
     gaps: string[];
     recommendations: string[];
+    courses?: CourseRecommendation[];
   };
+};
+
+type CourseRecommendation = {
+  title: string;
+  provider: string;
+  description: string;
+  level: 'Beginner' | 'Intermediate' | 'Advanced';
+  duration: string;
+  url: string;
 };
 
 const MatchResult = ({ data }: MatchResultProps) => {
   const [showJson, setShowJson] = useState(false);
+
+  // Generate mock course recommendations based on skill gaps if not provided
+  const courseRecommendations = data.courses || generateCourseRecommendations(data.gaps);
 
   // Determine score color based on the value
   const getScoreColor = (score: number) => {
@@ -71,9 +84,10 @@ const MatchResult = ({ data }: MatchResultProps) => {
         </div>
         
         <Tabs defaultValue="insights">
-          <TabsList className="grid grid-cols-3 mb-4">
+          <TabsList className="grid grid-cols-4 mb-4">
             <TabsTrigger value="insights">Key Insights</TabsTrigger>
             <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
+            <TabsTrigger value="courses">Courses</TabsTrigger>
             <TabsTrigger value="json" onClick={() => setShowJson(true)}>JSON Output</TabsTrigger>
           </TabsList>
           
@@ -155,6 +169,68 @@ const MatchResult = ({ data }: MatchResultProps) => {
             </div>
           </TabsContent>
           
+          {/* New Courses Tab */}
+          <TabsContent value="courses">
+            <div>
+              <h3 className="font-display font-medium text-lg mb-3">Recommended Courses to Build Your Skills</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Based on the identified skill gaps, we recommend these personalized courses to enhance your profile:
+              </p>
+              
+              <div className="space-y-4">
+                {courseRecommendations.map((course, index) => (
+                  <div key={index} className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
+                    <div className="bg-gray-50 dark:bg-gray-900 px-4 py-3 border-b border-gray-200 dark:border-gray-800">
+                      <div className="flex justify-between items-center">
+                        <h4 className="font-medium">{course.title}</h4>
+                        <Badge className={`${
+                          course.level === 'Beginner' ? 'bg-green-100 text-green-800' : 
+                          course.level === 'Intermediate' ? 'bg-yellow-100 text-yellow-800' : 
+                          'bg-red-100 text-red-800'
+                        }`}>
+                          {course.level}
+                        </Badge>
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        {course.provider} • {course.duration}
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                        {course.description}
+                      </p>
+                      <a 
+                        href={course.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm font-medium text-cv-blue-600 hover:text-cv-blue-800"
+                      >
+                        View Course
+                        <svg className="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-6 p-4 bg-cv-blue-50 dark:bg-cv-blue-900/20 rounded-lg border border-cv-blue-100 dark:border-cv-blue-800/30">
+                <div className="flex items-start gap-3">
+                  <svg className="h-6 w-6 text-cv-blue-600 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                  <div>
+                    <h4 className="font-medium text-cv-blue-800 dark:text-cv-blue-300">Why These Courses?</h4>
+                    <p className="text-sm text-cv-blue-700 dark:text-cv-blue-400 mt-1">
+                      These personalized recommendations are AI-generated based on your skill gaps and the job requirements. Completing these courses can significantly improve your match score.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+          
           <TabsContent value="json">
             {showJson && (
               <div>
@@ -187,6 +263,99 @@ const MatchResult = ({ data }: MatchResultProps) => {
       </CardContent>
     </Card>
   );
+};
+
+// Helper function to generate course recommendations based on skill gaps
+const generateCourseRecommendations = (gaps: string[]): CourseRecommendation[] => {
+  const courseDatabase: Record<string, CourseRecommendation[]> = {
+    "Go language experience": [
+      {
+        title: "Go Programming Language Fundamentals",
+        provider: "Coursera",
+        description: "A comprehensive introduction to Go programming language with practical exercises and real-world applications.",
+        level: "Beginner",
+        duration: "6 weeks",
+        url: "#"
+      },
+      {
+        title: "Advanced Go Programming",
+        provider: "Udemy",
+        description: "Dive deeper into Go with advanced concurrency patterns, memory management, and performance optimization techniques.",
+        level: "Intermediate",
+        duration: "8 weeks",
+        url: "#"
+      }
+    ],
+    "monitoring systems": [
+      {
+        title: "Cloud Monitoring and Logging",
+        provider: "Google Cloud",
+        description: "Learn how to implement comprehensive monitoring solutions for cloud-based applications using modern tools and practices.",
+        level: "Intermediate",
+        duration: "4 weeks",
+        url: "#"
+      }
+    ],
+    "Cloud security specialization": [
+      {
+        title: "AWS Security Specialization",
+        provider: "AWS Training",
+        description: "Comprehensive training on securing cloud infrastructure and applications in AWS environments.",
+        level: "Advanced",
+        duration: "10 weeks",
+        url: "#"
+      },
+      {
+        title: "Cloud Security Certification Prep",
+        provider: "Pluralsight",
+        description: "Prepare for industry-recognized cloud security certifications with hands-on labs and expert instruction.",
+        level: "Intermediate",
+        duration: "12 weeks",
+        url: "#"
+      }
+    ],
+    // Default courses for any unmatched gaps
+    "default": [
+      {
+        title: "Professional Skills Development",
+        provider: "LinkedIn Learning",
+        description: "Build essential professional skills to enhance your career prospects and job performance across various roles.",
+        level: "Beginner",
+        duration: "Self-paced",
+        url: "#"
+      },
+      {
+        title: "Technical Interview Preparation",
+        provider: "Educative",
+        description: "Comprehensive preparation for technical interviews with coding challenges, system design questions, and behavioral interview strategies.",
+        level: "Intermediate",
+        duration: "8 weeks",
+        url: "#"
+      }
+    ]
+  };
+
+  // Map skill gaps to courses, using default courses if no specific match is found
+  let recommendations: CourseRecommendation[] = [];
+  
+  gaps.forEach(gap => {
+    // Try to find an exact match
+    const matchedCourses = Object.keys(courseDatabase).find(key => 
+      gap.toLowerCase().includes(key.toLowerCase())
+    );
+    
+    if (matchedCourses) {
+      recommendations = [...recommendations, ...courseDatabase[matchedCourses]];
+    }
+  });
+  
+  // If no specific courses were found, add default courses
+  if (recommendations.length === 0) {
+    recommendations = [...courseDatabase.default];
+  }
+  
+  // Limit to 5 courses maximum
+  return recommendations.slice(0, 5);
 };
 
 export default MatchResult;

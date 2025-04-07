@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -99,6 +98,32 @@ BENEFITS
             "Highlight any Go programming language experience",
             "Add details about monitoring/logging tools used",
             "Consider obtaining a cloud security certification"
+          ],
+          courses: [
+            {
+              title: "Go Programming Language Fundamentals",
+              provider: "Coursera",
+              description: "A comprehensive introduction to Go programming language with practical exercises and real-world applications.",
+              level: "Beginner",
+              duration: "6 weeks",
+              url: "#"
+            },
+            {
+              title: "Cloud Monitoring and Observability",
+              provider: "LinkedIn Learning",
+              description: "Learn how to implement comprehensive monitoring for cloud applications using tools like Prometheus, Grafana, and ELK stack.",
+              level: "Intermediate",
+              duration: "4 weeks",
+              url: "#"
+            },
+            {
+              title: "AWS Security Specialization",
+              provider: "AWS Training",
+              description: "Comprehensive training on securing cloud infrastructure and applications in AWS environments.",
+              level: "Advanced",
+              duration: "10 weeks",
+              url: "#"
+            }
           ]
         };
 
